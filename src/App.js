@@ -1,9 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
+import React from 'react';
 
 function App() {
-  const list = [
-    {
+
+  const stories = [
+      {
    title:'React',
    url: 'https://react.js.org/',
    author: 'Jordan Walke',
@@ -19,17 +21,26 @@ function App() {
    points: 5,
    objectID:1,
     },
-  ]
+  ];
+  
   return (
     <div>
      <header>My Hacker Stories</header>
 
-     <label htmlFor='search'>Search: </label>
-     <input id="search" type="text" />
+     <Search />
 
       <hr/>
-      <ul>
-        {list.map(function(item) {
+      <List  list={stories}/>
+      
+      
+    </div>
+  );
+}
+
+function List(props) {
+  return(
+<ul>
+        {props.list.map(function(item) {
           return ( <li key= {item.objectID}>
             <span>
               <a href={item.url}>{item.title}</a>
@@ -40,6 +51,22 @@ function App() {
             </li> );
         })}
       </ul>
+  );
+}
+
+function Search() {
+   const [searchItem, setSearchTerm] = React.useState('');
+
+  const handleChange =(event) =>{
+    setSearchTerm(event.target.value);
+  }
+  return  (
+    <div>
+      <label htmFor="search">Search:</label>
+      <input id="search" type="text" onChange={handleChange} />
+      <p> 
+        Searching for <strong>{searchItem}</strong>.
+      </p>
     </div>
   );
 }
